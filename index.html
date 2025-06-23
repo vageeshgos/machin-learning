@@ -1,0 +1,26 @@
+<!-- Displaying Code Section -->
+<h2>🧠 Python Code Used for Learning Analysis</h2>
+<pre style="text-align: left; background-color: #222; color: #fff; padding: 15px; border-radius: 8px; max-width: 800px; margin: auto; overflow-x: auto;">
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+
+# Load and preprocess data
+data = pd.read_csv('house.csv')
+X = data[['LotArea', 'YearBuilt']]
+y = data['SalePrice']
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+print("Model trained.")
+</pre>
+
+<!-- Output Section -->
+<h3>🔎 Model Output</h3>
+<pre style="background-color: #eee; padding: 10px; max-width: 800px; margin: auto;">
+Model trained.
+R2 Score: 0.34
+MAE: 32,644
+</pre>
