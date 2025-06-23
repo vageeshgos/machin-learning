@@ -9,13 +9,14 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(120deg, #0a0a0a, #1e1e1e);
+      background: linear-gradient(120deg, #000000, #222222);
       margin: 0;
       padding: 0;
       color: #ecf0f1;
+      overflow-x: hidden;
     }
     header {
-      background-color: #000;
+      background-color: rgba(0, 0, 0, 0.95);
       color: white;
       padding: 60px 20px;
       text-align: center;
@@ -73,14 +74,13 @@
       font-size: 1em;
       box-shadow: 0 -6px 15px rgba(0,0,0,0.4);
     }
-
     .chatbox {
-      background: #1c1c1c;
+      background: #ecf0f1;
       max-width: 600px;
       margin: 30px auto;
       padding: 20px;
       border-radius: 10px;
-      color: #ecf0f1;
+      color: #2c3e50;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
     .chatlog {
@@ -93,11 +93,11 @@
     }
     .user {
       text-align: right;
-      color: #3498db;
+      color: #2980b9;
     }
     .gyani {
       text-align: left;
-      color: #2ecc71;
+      color: #27ae60;
     }
     .chatbox input {
       width: 100%;
@@ -105,8 +105,10 @@
       border: none;
       border-radius: 5px;
       font-size: 1em;
-      background: #2c3e50;
-      color: #fff;
+    }
+    a {
+      color: #00bcd4;
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -114,12 +116,12 @@
 
   <header>
     <h1>Gyani - Your Personal AI Assistant</h1>
-    <p>Built with Speech Recognition, Weather API, Scheduling, and More</p>
+    <p>Speech Recognition, Weather Info, Scheduling, and More</p>
   </header>
 
   <div class="chatbox">
     <div class="chatlog" id="chatlog">
-      <div class="gyani">Hi! I'm Gyani. Ask me anything like "what's the weather?"</div>
+      <div class="gyani">Hi! I'm Gyani. Type commands like "open google" or "what's the weather".</div>
     </div>
     <input type="text" id="userInput" placeholder="Type your command here..." onkeydown="if(event.key==='Enter'){sendMessage()}">
   </div>
@@ -128,20 +130,25 @@
     function sendMessage() {
       const input = document.getElementById("userInput");
       const chatlog = document.getElementById("chatlog");
-      const userMessage = input.value;
+      const userMessage = input.value.trim();
       if (!userMessage) return;
       chatlog.innerHTML += `<div class='user'>You: ${userMessage}</div>`;
       input.value = "";
+
       let response = "I didn't understand that.";
 
-      if (userMessage.toLowerCase().includes("weather")) {
+      const msg = userMessage.toLowerCase();
+
+      if (msg.includes("weather")) {
         response = "Sure! Please provide your city name.";
-      } else if (userMessage.toLowerCase().includes("schedule")) {
+      } else if (msg.includes("schedule")) {
         response = "Here's your schedule for today: Study AI from 7:30 PM to 11:30 PM.";
-      } else if (userMessage.toLowerCase().includes("play song")) {
-        response = "Opening YouTube for your song.";
-      } else if (userMessage.toLowerCase().includes("open google")) {
-        response = "Opening Google now.";
+      } else if (msg.includes("play song")) {
+        response = 'Click <a href="https://www.youtube.com" target="_blank">here</a> to play a song on YouTube.';
+      } else if (msg.includes("open google")) {
+        response = 'Click <a href="https://www.google.com" target="_blank">here</a> to open Google.';
+      } else if (msg.includes("open youtube")) {
+        response = 'Click <a href="https://www.youtube.com" target="_blank">here</a> to open YouTube.';
       }
 
       setTimeout(() => {
@@ -152,55 +159,33 @@
   </script>
 
   <div class="section">
-    <h2>Overview</h2>
+    <h2>Project Overview</h2>
     <div class="description">
-      Gyani is an intelligent AI voice assistant built in Python. It listens to voice commands, performs speech recognition, speaks responses using text-to-speech, and can interact with APIs and JSON data for schedules and weather.
-    </div>
-
-    <h2>Technologies Used</h2>
-    <div class="description">
-      Python, SpeechRecognition, SoundDevice, Pyttsx3, Webbrowser, OpenWeatherMap API, JSON, Youtube-DLP
+      Gyani is a Python-based AI assistant that listens to your voice and performs actions like fetching the weather, opening websites, playing music, and showing study schedules. This web version is a simulation interface that mimics the behavior with text-based interaction.
     </div>
 
     <h2>Features</h2>
     <ul>
-      <li>Voice command activation with wake word "Gyani"</li>
-      <li>Text-to-speech response engine</li>
-      <li>Weather information via OpenWeatherMap</li>
-      <li>Daily and Weekly AI learning schedules from JSON</li>
-      <li>Search and play songs from YouTube</li>
-      <li>Google and YouTube opening on command</li>
+      <li>Simulated Wake Word ("Gyani")</li>
+      <li>Voice and text-based commands (via Python speech libraries in local app)</li>
+      <li>Google, YouTube, and song search</li>
+      <li>Weather information via OpenWeatherMap API</li>
+      <li>Dynamic schedule loading via JSON</li>
     </ul>
 
-    <h2>Core Function - Wake Word</h2>
-    <pre><code>def listen_for_wake_word():
-    while True:
-        command = recognize_audio()
-        if "gyani" in command:
-            speak("Yes, how can I help you?")
-            user_command = recognize_audio()
-            process_command(user_command)</code></pre>
-
-    <h2>Schedule Reader</h2>
-    <pre><code>def get_schedule_for_today():
-    roadmap = load_schedule(roadmap_path)
-    today_date = datetime.today().strftime("%B %d")
-    return daily_schedule[today_date]</code></pre>
-
-    <h2>Weather Fetch</h2>
-    <pre><code>def get_weather(city):
-    url = f"{BASE_URL}?q={city}&appid={API_KEY}&units=metric"
-    ...
-    return description + temperature</code></pre>
+    <h2>Explanation</h2>
+    <div class="explanation">
+      The actual assistant uses Python libraries like SpeechRecognition, Pyttsx3, and SoundDevice to process user voice commands. It uses condition checks and external APIs to perform tasks such as opening browsers, checking weather, and scheduling.
+    </div>
 
     <h2>Conclusion</h2>
     <div class="explanation">
-      This project shows how to create a working voice assistant like Alexa or Siri using Python and real-world libraries. It combines automation, APIs, AI planning and UI—all in one modular setup. Easily extensible to add alarms, WhatsApp automation, and email notifications.
+      Gyani showcases how voice interfaces and intelligent automation can be combined into one assistant. This project is a practical step towards building real-world AI interfaces like Alexa or Google Assistant using Python.
     </div>
   </div>
 
   <footer>
-    &copy; 2025 Vageesh Goswami | AI Voice Assistant - Gyani
+    &copy; 2025 Vageesh Goswami | Gyani AI Voice Assistant Project
   </footer>
 
 </body>
