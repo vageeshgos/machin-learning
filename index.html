@@ -5,187 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gyani - Personal AI Assistant</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(120deg, #000000, #222222);
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
       margin: 0;
       padding: 0;
       color: #ecf0f1;
-      overflow-x: hidden;
     }
+
     header {
-      background-color: rgba(0, 0, 0, 0.95);
-      color: white;
-      padding: 60px 20px;
       text-align: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      padding: 50px 20px;
+      background: #000;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
     }
-    h1 {
+
+    header h1 {
       font-size: 3em;
       margin-bottom: 10px;
-      animation: fadeInDown 1.5s ease-in-out;
     }
+
     header p {
       font-size: 1.2em;
-      animation: fadeInUp 2s ease-in-out;
+      color: #bbb;
     }
-    .section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 30px;
-    }
-    .section h2 {
-      color: #fff;
-      margin-top: 50px;
-      border-bottom: 2px solid #00bcd4;
-      padding-bottom: 5px;
-    }
-    pre, code {
-      background: #2c3e50;
-      color: #ecf0f1;
-      padding: 20px;
-      border-radius: 10px;
-      overflow-x: auto;
-      font-size: 0.9em;
-    }
-    .description, .explanation {
-      background: #34495e;
-      padding: 18px;
-      margin-top: 10px;
-      border-left: 6px solid #00bcd4;
-      border-radius: 6px;
-      font-size: 1.05em;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    ul {
-      padding-left: 20px;
-    }
-    ul li {
-      margin: 10px 0;
-      font-size: 1.05em;
-    }
-    footer {
-      background-color: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 25px;
-      font-size: 1em;
-      box-shadow: 0 -6px 15px rgba(0,0,0,0.4);
-    }
+
     .chatbox {
-      background: #ecf0f1;
+      background: #fff;
       max-width: 600px;
-      margin: 30px auto;
+      margin: 40px auto;
       padding: 20px;
-      border-radius: 10px;
-      color: #2c3e50;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      color: #222;
     }
+
     .chatlog {
       max-height: 300px;
       overflow-y: auto;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
+
     .chatlog div {
       margin: 10px 0;
     }
+
     .user {
       text-align: right;
-      color: #2980b9;
+      color: #007acc;
     }
+
     .gyani {
       text-align: left;
-      color: #27ae60;
+      color: #2c3e50;
     }
-    .chatbox input {
+
+    input[type="text"] {
       width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
+      padding: 12px;
       font-size: 1em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
-    a {
-      color: #00bcd4;
-      text-decoration: underline;
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 0.9em;
+      background: #111;
+      color: #777;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Gyani - Your Personal AI Assistant</h1>
-    <p>Speech Recognition, Weather Info, Scheduling, and More</p>
+    <h1>Gyani - AI Assistant</h1>
+    <p>Ask me anything like "open google", "open youtube", or "weather"</p>
   </header>
 
   <div class="chatbox">
     <div class="chatlog" id="chatlog">
-      <div class="gyani">Hi! I'm Gyani. Type commands like "open google" or "what's the weather".</div>
+      <div class="gyani">Hi! I'm Gyani. What would you like me to do?</div>
     </div>
-    <input type="text" id="userInput" placeholder="Type your command here..." onkeydown="if(event.key==='Enter'){sendMessage()}">
+    <input type="text" id="userInput" placeholder="Type a command and press Enter..." onkeydown="if(event.key==='Enter'){sendMessage()}">
   </div>
 
   <script>
     function sendMessage() {
       const input = document.getElementById("userInput");
       const chatlog = document.getElementById("chatlog");
-      const userMessage = input.value.trim();
-      if (!userMessage) return;
-      chatlog.innerHTML += `<div class='user'>You: ${userMessage}</div>`;
+      const message = input.value.trim();
+      if (!message) return;
+
+      // Show user message
+      chatlog.innerHTML += `<div class="user">You: ${message}</div>`;
       input.value = "";
 
+      // Default response
       let response = "I didn't understand that.";
 
-      const msg = userMessage.toLowerCase();
+      // Convert to lowercase for matching
+      const msg = message.toLowerCase();
 
-      if (msg.includes("weather")) {
-        response = "Sure! Please provide your city name.";
-      } else if (msg.includes("schedule")) {
-        response = "Here's your schedule for today: Study AI from 7:30 PM to 11:30 PM.";
-      } else if (msg.includes("play song")) {
-        response = 'Click <a href="https://www.youtube.com" target="_blank">here</a> to play a song on YouTube.';
-      } else if (msg.includes("open google")) {
-        response = 'Click <a href="https://www.google.com" target="_blank">here</a> to open Google.';
+      // Handle commands
+      if (msg.includes("open google")) {
+        response = "Opening Google...";
+        window.open("https://www.google.com", "_blank");
       } else if (msg.includes("open youtube")) {
-        response = 'Click <a href="https://www.youtube.com" target="_blank">here</a> to open YouTube.';
+        response = "Opening YouTube...";
+        window.open("https://www.youtube.com", "_blank");
+      } else if (msg.includes("play song")) {
+        response = "Searching YouTube for your song...";
+        window.open("https://www.youtube.com/results?search_query=song", "_blank");
+      } else if (msg.includes("weather")) {
+        response = "Please enter your city name to check weather.";
+      } else if (msg.includes("schedule")) {
+        response = "Today's schedule: Study AI from 7:30 PM to 11:30 PM.";
       }
 
+      // Show bot response
       setTimeout(() => {
-        chatlog.innerHTML += `<div class='gyani'>Gyani: ${response}</div>`;
+        chatlog.innerHTML += `<div class="gyani">Gyani: ${response}</div>`;
         chatlog.scrollTop = chatlog.scrollHeight;
-      }, 500);
+      }, 300);
     }
   </script>
 
-  <div class="section">
-    <h2>Project Overview</h2>
-    <div class="description">
-      Gyani is a Python-based AI assistant that listens to your voice and performs actions like fetching the weather, opening websites, playing music, and showing study schedules. This web version is a simulation interface that mimics the behavior with text-based interaction.
-    </div>
-
-    <h2>Features</h2>
-    <ul>
-      <li>Simulated Wake Word ("Gyani")</li>
-      <li>Voice and text-based commands (via Python speech libraries in local app)</li>
-      <li>Google, YouTube, and song search</li>
-      <li>Weather information via OpenWeatherMap API</li>
-      <li>Dynamic schedule loading via JSON</li>
-    </ul>
-
-    <h2>Explanation</h2>
-    <div class="explanation">
-      The actual assistant uses Python libraries like SpeechRecognition, Pyttsx3, and SoundDevice to process user voice commands. It uses condition checks and external APIs to perform tasks such as opening browsers, checking weather, and scheduling.
-    </div>
-
-    <h2>Conclusion</h2>
-    <div class="explanation">
-      Gyani showcases how voice interfaces and intelligent automation can be combined into one assistant. This project is a practical step towards building real-world AI interfaces like Alexa or Google Assistant using Python.
-    </div>
-  </div>
-
   <footer>
-    &copy; 2025 Vageesh Goswami | Gyani AI Voice Assistant Project
+    &copy; 2025 Vahege | Gyani - AI Assistant Web Project
   </footer>
 
 </body>
