@@ -1,26 +1,207 @@
-<!-- Displaying Code Section -->
-<h2>🧠 Python Code Used for Learning Analysis</h2>
-<pre style="text-align: left; background-color: #222; color: #fff; padding: 15px; border-radius: 8px; max-width: 800px; margin: auto; overflow-x: auto;">
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gyani - Personal AI Assistant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(120deg, #0a0a0a, #1e1e1e);
+      margin: 0;
+      padding: 0;
+      color: #ecf0f1;
+    }
+    header {
+      background-color: #000;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      animation: fadeInDown 1.5s ease-in-out;
+    }
+    header p {
+      font-size: 1.2em;
+      animation: fadeInUp 2s ease-in-out;
+    }
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 30px;
+    }
+    .section h2 {
+      color: #fff;
+      margin-top: 50px;
+      border-bottom: 2px solid #00bcd4;
+      padding-bottom: 5px;
+    }
+    pre, code {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 20px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.9em;
+    }
+    .description, .explanation {
+      background: #34495e;
+      padding: 18px;
+      margin-top: 10px;
+      border-left: 6px solid #00bcd4;
+      border-radius: 6px;
+      font-size: 1.05em;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    ul {
+      padding-left: 20px;
+    }
+    ul li {
+      margin: 10px 0;
+      font-size: 1.05em;
+    }
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 25px;
+      font-size: 1em;
+      box-shadow: 0 -6px 15px rgba(0,0,0,0.4);
+    }
 
-# Load and preprocess data
-data = pd.read_csv('house.csv')
-X = data[['LotArea', 'YearBuilt']]
-y = data['SalePrice']
-X_train, X_test, y_train, y_test = train_test_split(X, y)
+    .chatbox {
+      background: #1c1c1c;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 10px;
+      color: #ecf0f1;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .chatlog {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+    }
+    .chatlog div {
+      margin: 10px 0;
+    }
+    .user {
+      text-align: right;
+      color: #3498db;
+    }
+    .gyani {
+      text-align: left;
+      color: #2ecc71;
+    }
+    .chatbox input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      background: #2c3e50;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
 
-model = LinearRegression()
-model.fit(X_train, y_train)
-print("Model trained.")
-</pre>
+  <header>
+    <h1>Gyani - Your Personal AI Assistant</h1>
+    <p>Built with Speech Recognition, Weather API, Scheduling, and More</p>
+  </header>
 
-<!-- Output Section -->
-<h3>🔎 Model Output</h3>
-<pre style="background-color: #eee; padding: 10px; max-width: 800px; margin: auto;">
-Model trained.
-R2 Score: 0.34
-MAE: 32,644
-</pre>
+  <div class="chatbox">
+    <div class="chatlog" id="chatlog">
+      <div class="gyani">Hi! I'm Gyani. Ask me anything like "what's the weather?"</div>
+    </div>
+    <input type="text" id="userInput" placeholder="Type your command here..." onkeydown="if(event.key==='Enter'){sendMessage()}">
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const chatlog = document.getElementById("chatlog");
+      const userMessage = input.value;
+      if (!userMessage) return;
+      chatlog.innerHTML += `<div class='user'>You: ${userMessage}</div>`;
+      input.value = "";
+      let response = "I didn't understand that.";
+
+      if (userMessage.toLowerCase().includes("weather")) {
+        response = "Sure! Please provide your city name.";
+      } else if (userMessage.toLowerCase().includes("schedule")) {
+        response = "Here's your schedule for today: Study AI from 7:30 PM to 11:30 PM.";
+      } else if (userMessage.toLowerCase().includes("play song")) {
+        response = "Opening YouTube for your song.";
+      } else if (userMessage.toLowerCase().includes("open google")) {
+        response = "Opening Google now.";
+      }
+
+      setTimeout(() => {
+        chatlog.innerHTML += `<div class='gyani'>Gyani: ${response}</div>`;
+        chatlog.scrollTop = chatlog.scrollHeight;
+      }, 500);
+    }
+  </script>
+
+  <div class="section">
+    <h2>Overview</h2>
+    <div class="description">
+      Gyani is an intelligent AI voice assistant built in Python. It listens to voice commands, performs speech recognition, speaks responses using text-to-speech, and can interact with APIs and JSON data for schedules and weather.
+    </div>
+
+    <h2>Technologies Used</h2>
+    <div class="description">
+      Python, SpeechRecognition, SoundDevice, Pyttsx3, Webbrowser, OpenWeatherMap API, JSON, Youtube-DLP
+    </div>
+
+    <h2>Features</h2>
+    <ul>
+      <li>Voice command activation with wake word "Gyani"</li>
+      <li>Text-to-speech response engine</li>
+      <li>Weather information via OpenWeatherMap</li>
+      <li>Daily and Weekly AI learning schedules from JSON</li>
+      <li>Search and play songs from YouTube</li>
+      <li>Google and YouTube opening on command</li>
+    </ul>
+
+    <h2>Core Function - Wake Word</h2>
+    <pre><code>def listen_for_wake_word():
+    while True:
+        command = recognize_audio()
+        if "gyani" in command:
+            speak("Yes, how can I help you?")
+            user_command = recognize_audio()
+            process_command(user_command)</code></pre>
+
+    <h2>Schedule Reader</h2>
+    <pre><code>def get_schedule_for_today():
+    roadmap = load_schedule(roadmap_path)
+    today_date = datetime.today().strftime("%B %d")
+    return daily_schedule[today_date]</code></pre>
+
+    <h2>Weather Fetch</h2>
+    <pre><code>def get_weather(city):
+    url = f"{BASE_URL}?q={city}&appid={API_KEY}&units=metric"
+    ...
+    return description + temperature</code></pre>
+
+    <h2>Conclusion</h2>
+    <div class="explanation">
+      This project shows how to create a working voice assistant like Alexa or Siri using Python and real-world libraries. It combines automation, APIs, AI planning and UI—all in one modular setup. Easily extensible to add alarms, WhatsApp automation, and email notifications.
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Vageesh Goswami | AI Voice Assistant - Gyani
+  </footer>
+
+</body>
+</html>
